@@ -1,34 +1,36 @@
 import csv
 import sys
 from pygooglechart import GroupedVerticalBarChart
-from operator import itemgetter
-from itertools import groupby
 
-def average(data, key=itemgetter(0), value=itemgetter(1)):
-    """Summarise the supplied data.
+#headerrow = reader.next()
+#survey_id, choice_id, question_name, order, preceptor_id, site_name
 
-       Produce a summary of the data, grouped by the given key (default: the
-       first item), and giving totals of the given value (default: the second
-       item).
+#chart = GroupedVerticalBarChart(settings.width, settings.height,
+#    y_range=(
 
-       The key and value arguments should be functions which, given a data
-       record, return the relevant value.
-    """
-    for k, group in groupby(data, key):
-        yield (k, sum(value(row) for row in group) / count(group)
+def getaverageforfield(data, key, value):
+    k = None
+    for r in sorted(data, key=lambda rows: rows[key]):
+        if k != r[key]:
+            if k != None: yield (k, s/c)
+            k = r[key]
+            s = 0
+            c = 0
+        s += float(r[value])
+        c += float(1)
 
 if __name__ == "__main__":
     reader = csv.reader(open( sys.argv[1], 'rb' ))
-  #headerrow = reader.next()
-  #survey_id, choice_id, question_name, order, preceptor_id, site_name
 
-  #chart = GroupedVerticalBarChart(settings.width, settings.height,
-  #    y_range=(
+    print "averages by question"
+    for key, avg in getaverageforfield(reader, key=2, value=1):
+        print "%s: %f" % (key, avg)
 
-    rows = []
-    for r in reader:
-        rows.append((r[2], float(r[1])))
+    reader = csv.reader(open( sys.argv[1], 'rb' ))
+    print "averages by preceptor and question"
+    #for key, avg in getaverageforfield(reader, key=tuple([5,2j), value=1):
+        #    print "%s: %f" % (key, avg)
 
-    for question, avg in average(rows):
-        print "%10s: %d" % (question, avg)
-
+    a = [1,2,3,4]
+    print a[2]
+    print a[tuple([2,3])]
