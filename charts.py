@@ -21,11 +21,16 @@ stats = Table('stats', metadata,
 	Column('question_name', String),
 	Column('order', Integer),
 	Column('preceptor_id', Integer),
+	Column('preceptor_name', Integer),
 	Column('site_name', String),
 )
 metadata.create_all(engine)
 
-reader = csv.reader(open( sys.argv[1], 'rb'), delimiter='\t')
+def ascii(unicode_csv_data):
+    for line in unicode_csv_data:
+        yield line.decode('ascii', 'ignore') 
+
+reader = csv.reader(ascii(open( 'export.csv', 'rb')))
 headerrow = reader.next()
 conn = engine.connect()
 
@@ -36,13 +41,14 @@ for row in reader:
 		question_name = row[2],
 		order = row[3],
 		preceptor_id = row[4],
-		site_name = row[5],
+		preceptor_name = row[5],
+		site_name = row[6],
 	)
 	conn.execute(ins)
 
 
-preceptors = conn.execute(select([stats.c.preceptor_id, stats.c.site_name
-	]).group_by(stats.c.preceptor_id, stats.c.site_name))
+preceptors = conn.execute(select([stats.c.preceptor_name, stats.c.site_name
+	]).group_by(stats.c.preceptor_name, stats.c.site_name))
 
 for p in preceptors:
 	chart = GroupedVerticalBarChart(350, 200,
@@ -60,7 +66,7 @@ for p in preceptors:
 	prec = p[0]
 	site = p[1]
 	questions = conn.execute(select([stats.c.question_name, stats.c.order, func.avg(stats.c.choice_id)],
-			stats.c.preceptor_id == prec
+			stats.c.preceptor_name == prec
 		).group_by(stats.c.order, stats.c.question_name, 
 		).order_by(stats.c.order
 		)).fetchall()
