@@ -116,6 +116,14 @@ for p in preceptors:
 
   Story.append(Image(logo, 5.25 * inch, 3.75 * inch))
   Story.append(Spacer(1, 12))
+  Story.append(Paragraph("Scale",
+    styles["Normal"]
+  ))
+  Story.append(Paragraph("1=never        2=rarely        3=occasionally  4=often 5=always",
+    styles["Normal"]
+  ))
+
+  Story.append(Spacer(1, 12))
 
   qcnt = 1
   for q in questions:
@@ -125,15 +133,5 @@ for p in preceptors:
     ))
     qcnt+= 1
 
-  Story.append(Spacer(1, 12))
-  Story.append(Paragraph("""
-    Hello.  Here is your report.  Please contact us for more information.
-    Thank you.
-The result is three paragraphs, each half an inch apart and in a different color.
-
-Platypus provides a huge benefit over the pdfgen module when it comes to quickly and efficiently generating dynamic documents. Consider this script, which takes the contents of a simple text file and generates a PDF document:
-""",
-    styles["Normal"]
-  ))
  
   doc.build(Story)
