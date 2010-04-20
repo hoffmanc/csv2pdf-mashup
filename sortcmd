@@ -1,1 +1,0 @@
-sort exportrandom -t"," -k3 > exportsorted
