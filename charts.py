@@ -101,7 +101,7 @@ for p in preceptors:
   )
   
   styles=getSampleStyleSheet()
-  styles.add(ParagraphStyle(name='Justify', alignment=TA_JUSTIFY))
+  center = ParagraphStyle(name='Centered', justification='center')
 
   Story=[]
   logo = "preceptorReport.png"
@@ -116,15 +116,16 @@ for p in preceptors:
 
   Story.append(Image(logo, 5.25 * inch, 3.75 * inch))
   Story.append(Spacer(1, 12))
-  Story.append(Paragraph("Scale",
-    styles["Normal"]
-  ))
-  Story.append(Paragraph("1=never        2=rarely        3=occasionally  4=often 5=always",
-    styles["Normal"]
-  ))
+  txt = Paragraph(
+    """<center><font size=12>Scale</font>
+       <br/>1=Never 2=Rarely 3=Occasionally 4=Often 5=Always</center>""",
+    center)
+  Story.append(txt)
 
   Story.append(Spacer(1, 12))
 
+  txt = Paragraph("<font size=12>Questions</font>", styles["Normal"])
+  Story.append(txt)
   qcnt = 1
   for q in questions:
     Story.append(Paragraph(
