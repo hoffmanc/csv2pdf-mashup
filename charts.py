@@ -56,7 +56,7 @@ for p in preceptors:
   chart.set_bar_width(7)
   chart.set_bar_spacing(0)
   chart.set_group_spacing(4)
-  chart.set_colours(['0772A1', 'FFB700', 'FF3100'])
+  chart.set_colours(['ffff99', 'ffcc00', 'cc99ff'])
   chart.set_grid(0, 20, 5, 5)
   
   left_axis = range(0, 6, 1)
@@ -89,7 +89,7 @@ for p in preceptors:
   all = map(lambda a: a[1], all)
   chart.add_data(all)
 
-  chart.set_legend([prec, site, 'All Preceptors'])
+  chart.set_legend([prec, site, 'All Preceptors in Your Clerkship'])
   chart.set_legend_position('bv')
 
   chart.download('preceptorReport.png')
@@ -110,7 +110,7 @@ for p in preceptors:
   Story.append(Paragraph(ptext, styles["Normal"]))
   ptext = '<font size=12>%s</font>' % prec
   Story.append(Paragraph(ptext, styles["Normal"]))
-  ptext = '<font size=12>Year of Evaluation Summary: %s</font>' % time.strftime('%Y')
+  ptext = '<font size=12>Year of Evaluation Summary: 2009-2010</font>'
   Story.append(Paragraph(ptext, styles["Normal"]))
   Story.append(Spacer(1, 12))
 
