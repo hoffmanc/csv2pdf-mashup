@@ -56,7 +56,7 @@ for p in preceptors:
   chart.set_bar_width(7)
   chart.set_bar_spacing(0)
   chart.set_group_spacing(4)
-  chart.set_colours(['ffff99', 'ffcc00', 'cc99ff'])
+  chart.set_colours(['ccffff', 'ffcc00', 'cc99ff'])
   chart.set_grid(0, 20, 5, 5)
   
   left_axis = range(0, 6, 1)
