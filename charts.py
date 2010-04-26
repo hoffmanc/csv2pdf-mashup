@@ -1,5 +1,5 @@
 #for data
-import csv,sys
+import csv,sys,string
 from sqlalchemy import create_engine, Table, Column, Integer, Float, String, MetaData, select, func, and_
 
 #for charts
@@ -94,8 +94,11 @@ for p in preceptors:
 
   chart.download('preceptorReport.png')
 
+  valid_chars = "-%s%s" % (string.ascii_letters, string.digits)
+  prec_safe_name = ''.join(c for c in prec if c in valid_chars)
+
   doc = SimpleDocTemplate(
-    "preceptor-report-%s.pdf" % prec,pagesize=letter,
+    "preceptor-report-%s.pdf" % prec_safe_name,pagesize=letter,
     rightMargin=72,leftMargin=72,
     topMargin=72,bottomMargin=18
   )
