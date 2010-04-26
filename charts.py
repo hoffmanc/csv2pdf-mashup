@@ -56,7 +56,7 @@ for p in preceptors:
   chart.set_bar_width(7)
   chart.set_bar_spacing(0)
   chart.set_group_spacing(4)
-  chart.set_colours(['0772A1', 'FFB700', 'FF3100'])
+  chart.set_colours(['ccffff', 'ffcc00', 'cc99ff'])
   chart.set_grid(0, 20, 5, 5)
   
   left_axis = range(0, 6, 1)
@@ -89,7 +89,7 @@ for p in preceptors:
   all = map(lambda a: a[1], all)
   chart.add_data(all)
 
-  chart.set_legend([prec, site, 'All Preceptors'])
+  chart.set_legend([prec, site, 'All Preceptors in Your Clerkship'])
   chart.set_legend_position('bv')
 
   chart.download('preceptorReport.png')
@@ -104,7 +104,7 @@ for p in preceptors:
   )
   
   styles=getSampleStyleSheet()
-  styles.add(ParagraphStyle(name='Justify', alignment=TA_JUSTIFY))
+  center = ParagraphStyle(name='Centered', justification='center')
 
   Story=[]
   logo = "preceptorReport.png"
@@ -113,13 +113,22 @@ for p in preceptors:
   Story.append(Paragraph(ptext, styles["Normal"]))
   ptext = '<font size=12>%s</font>' % prec
   Story.append(Paragraph(ptext, styles["Normal"]))
-  ptext = '<font size=12>Year of Evaluation Summary: %s</font>' % time.strftime('%Y')
+  ptext = '<font size=12>Year of Evaluation Summary: 2009-2010</font>'
   Story.append(Paragraph(ptext, styles["Normal"]))
   Story.append(Spacer(1, 12))
 
   Story.append(Image(logo, 5.25 * inch, 3.75 * inch))
   Story.append(Spacer(1, 12))
+  txt = Paragraph(
+    """<center><font size=12>Scale</font>
+       <br/>1=Never 2=Rarely 3=Occasionally 4=Often 5=Always</center>""",
+    center)
+  Story.append(txt)
 
+  Story.append(Spacer(1, 12))
+
+  txt = Paragraph("<font size=12>Questions</font>", styles["Normal"])
+  Story.append(txt)
   qcnt = 1
   for q in questions:
     Story.append(Paragraph(
@@ -128,15 +137,5 @@ for p in preceptors:
     ))
     qcnt+= 1
 
-  Story.append(Spacer(1, 12))
-  Story.append(Paragraph("""
-    Hello.  Here is your report.  Please contact us for more information.
-    Thank you.
-The result is three paragraphs, each half an inch apart and in a different color.
-
-Platypus provides a huge benefit over the pdfgen module when it comes to quickly and efficiently generating dynamic documents. Consider this script, which takes the contents of a simple text file and generates a PDF document:
-""",
-    styles["Normal"]
-  ))
  
   doc.build(Story)
